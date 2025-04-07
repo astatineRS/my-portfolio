@@ -90,18 +90,18 @@ const Hero = () => {
   ];
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden" id="hero">
       <CursorFollower />
       
       {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-light via-white to-gray-light dark:from-blue-dark dark:via-gray-dark dark:to-gray-dark opacity-70"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-white to-gray-100 dark:from-blue-950 dark:via-gray-900 dark:to-gray-950 opacity-70"></div>
       
       {/* Grid pattern overlay */}
       <div className="absolute inset-0 bg-grid-pattern opacity-5 dark:opacity-10"></div>
       
       {/* Animated background shapes */}
       <motion.div 
-        className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-medium opacity-10 dark:opacity-20 blur-3xl"
+        className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-400 dark:bg-blue-600 opacity-10 dark:opacity-20 blur-3xl"
         animate={{ 
           x: [0, 20, 0], 
           y: [0, -20, 0],
@@ -115,7 +115,7 @@ const Hero = () => {
       />
       
       <motion.div 
-        className="absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full bg-blue-dark opacity-10 dark:opacity-20 blur-3xl"
+        className="absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full bg-blue-600 dark:bg-blue-800 opacity-10 dark:opacity-20 blur-3xl"
         animate={{ 
           x: [0, -30, 0], 
           y: [0, 20, 0],
@@ -128,29 +128,29 @@ const Hero = () => {
         }}
       />
       
-      {/* UI Design Elements */}
+      {/* UI Design Elements - Hide on smaller screens */}
       <DesignElement className="top-32 left-[15%] hidden lg:flex" delay={2.5}>
         <div className="flex items-center gap-2">
-          <FiLayers className="text-blue-dark" size={18} />
-          <span className="text-sm font-medium">UI Components</span>
+          <FiLayers className="text-blue-700 dark:text-blue-400" size={18} />
+          <span className="text-sm font-medium text-gray-800 dark:text-gray-200">UI Components</span>
         </div>
       </DesignElement>
       
       <DesignElement className="bottom-32 left-[20%] hidden lg:flex" delay={2.8}>
         <div className="flex items-center gap-2">
           <FiPenTool className="text-indigo-500" size={18} />
-          <span className="text-sm font-medium">Design System</span>
+          <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Design System</span>
         </div>
       </DesignElement>
       
       <DesignElement className="top-40 right-[15%] hidden lg:flex" delay={3.1}>
         <div className="flex items-center gap-2">
           <FiBox className="text-purple-500" size={18} />
-          <span className="text-sm font-medium">Prototyping</span>
+          <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Prototyping</span>
         </div>
       </DesignElement>
       
-      {/* Color palette */}
+      {/* Color palette - Hide on smaller screens */}
       <div className="absolute right-10 top-1/2 transform -translate-y-1/2 hidden xl:flex flex-col gap-3">
         {colorPalette.map((color, index) => (
           <motion.div
@@ -164,10 +164,10 @@ const Hero = () => {
         ))}
       </div>
       
-      <div className="section-container z-10 flex flex-col lg:flex-row items-center justify-between gap-8">
+      <div className="section-container z-10 flex flex-col lg:flex-row items-center justify-between gap-8 py-8 lg:py-20">
         <div className="w-full lg:w-1/2 text-center lg:text-left">
           <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 dark:text-white"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
@@ -175,7 +175,7 @@ const Hero = () => {
             Hi, I'm <span className="text-gradient">
               Raunak Shukla
               <motion.span 
-                className="absolute -bottom-2 left-0 w-full h-1 bg-blue-medium rounded-full"
+                className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500 dark:bg-blue-400 rounded-full"
                 initial={{ width: 0 }}
                 animate={{ width: "100%" }}
                 transition={{ delay: 0.8, duration: 0.5 }}
@@ -189,14 +189,14 @@ const Hero = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.5 }}
           >
-            <h2 className="text-base md:text-xl lg:text-2xl font-medium text-gray-dark dark:text-gray-light">
+            <h2 className="text-base md:text-xl lg:text-2xl font-medium text-gray-800 dark:text-gray-200">
               {typedText}
               <span className="animate-pulse">|</span>
             </h2>
           </motion.div>
           
           <motion.blockquote
-            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto lg:mx-0 pl-4 border-l-4 border-blue-medium italic"
+            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto lg:mx-0 pl-4 border-l-4 border-blue-500 dark:border-blue-400 italic"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1, duration: 0.5 }}
@@ -213,15 +213,17 @@ const Hero = () => {
             transition={{ delay: 1.5, duration: 0.5 }}
           >
             <motion.a 
-              href="#contact" 
+              href="https://topmate.io/raunak_shukla" 
+              target="_blank"
+              rel="noopener noreferrer"
               className="btn-primary flex items-center gap-2 relative overflow-hidden group"
-              whileHover={{ scale: 1.05 }}
+              whileHover={{ scale: 1.05, boxShadow: "0 4px 12px rgba(59, 130, 246, 0.5)" }}
               whileTap={{ scale: 0.95 }}
             >
               <FiMail size={18} />
-              <span className="relative z-10">Get in Touch</span>
+              <span className="relative z-10">Book a Session</span>
               <motion.span 
-                className="absolute inset-0 bg-blue-medium opacity-0 group-hover:opacity-20"
+                className="absolute inset-0 bg-blue-500 dark:bg-blue-600 opacity-0 group-hover:opacity-20"
                 initial={{ x: "-100%" }}
                 whileHover={{ x: 0 }}
                 transition={{ duration: 0.3 }}
@@ -238,7 +240,7 @@ const Hero = () => {
               <FiDownload size={18} />
               <span className="relative z-10">Download Resume</span>
               <motion.span 
-                className="absolute inset-0 bg-blue-medium opacity-0 group-hover:opacity-10"
+                className="absolute inset-0 bg-blue-500 dark:bg-blue-600 opacity-0 group-hover:opacity-10"
                 initial={{ x: "-100%" }}
                 whileHover={{ x: 0 }}
                 transition={{ duration: 0.3 }}
@@ -248,16 +250,16 @@ const Hero = () => {
         </div>
         
         <motion.div
-          className="w-full lg:w-1/2 flex justify-center lg:justify-end"
+          className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-8 lg:mt-0"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.5, duration: 0.5 }}
         >
-          <div className="relative w-80 h-80">
+          <div className="relative w-72 h-72 sm:w-80 sm:h-80">
             {/* Interactive design elements container */}
             <div className="absolute inset-0 flex items-center justify-center">
               {/* Main image with design frame */}
-              <div className="relative w-72 h-72 z-10">
+              <div className="relative w-64 h-64 sm:w-72 sm:h-72 z-10">
                 {/* Animated design frame */}
                 <motion.div 
                   className="absolute -inset-3 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 rounded-lg opacity-70 z-0"
@@ -290,10 +292,10 @@ const Hero = () => {
                 </motion.div>
               </div>
               
-              {/* Decorative design elements */}
+              {/* Decorative design elements - Adjust positioning for mobile */}
               {/* Design grid */}
               <motion.div 
-                className="absolute top-0 left-0 w-20 h-20 wireframe-box"
+                className="absolute -top-4 -left-4 sm:top-0 sm:left-0 w-16 sm:w-20 h-16 sm:h-20 wireframe-box"
                 initial={{ y: -10, opacity: 0 }}
                 animate={{ y: 0, opacity: 1 }}
                 transition={{ delay: 1, duration: 0.5 }}
@@ -306,9 +308,9 @@ const Hero = () => {
                 </div>
               </motion.div>
               
-              {/* Design tool */}
+              {/* Design tool - Adjust for mobile */}
               <motion.div 
-                className="absolute -bottom-2 -left-10 w-24 h-24 rounded-full bg-white dark:bg-gray-800 shadow-lg p-3 z-20"
+                className="absolute -bottom-2 -left-4 sm:-left-10 w-20 sm:w-24 h-20 sm:h-24 rounded-full bg-white dark:bg-gray-800 shadow-lg p-3 z-20"
                 initial={{ scale: 0 }}
                 animate={{ scale: 1 }}
                 transition={{ delay: 1.2, type: "spring", stiffness: 200, damping: 15 }}
@@ -322,9 +324,9 @@ const Hero = () => {
                 </div>
               </motion.div>
               
-              {/* Component mockup */}
+              {/* Component mockup - Adjust for mobile */}
               <motion.div 
-                className="absolute -top-4 -right-8 w-28 h-20 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 z-20"
+                className="absolute -top-2 sm:-top-4 -right-4 sm:-right-8 w-24 sm:w-28 h-16 sm:h-20 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 z-20"
                 initial={{ scale: 0, rotate: -10 }}
                 animate={{ scale: 1, rotate: -10 }}
                 transition={{ delay: 1.4, type: "spring", stiffness: 200, damping: 15 }}
@@ -342,9 +344,9 @@ const Hero = () => {
                 </div>
               </motion.div>
               
-              {/* Prototype indicator */}
+              {/* Prototype indicator - Adjust for mobile */}
               <motion.div 
-                className="absolute bottom-2 -right-10 w-24 h-10 bg-blue-500 dark:bg-blue-600 text-white rounded-full shadow-lg z-20 flex items-center justify-center text-xs font-medium"
+                className="absolute bottom-2 -right-4 sm:-right-10 w-20 sm:w-24 h-8 sm:h-10 bg-blue-500 dark:bg-blue-600 text-white rounded-full shadow-lg z-20 flex items-center justify-center text-xs font-medium"
                 initial={{ x: 50, opacity: 0 }}
                 animate={{ x: 0, opacity: 1 }}
                 transition={{ delay: 1.6, duration: 0.5 }}
@@ -354,14 +356,14 @@ const Hero = () => {
               </motion.div>
             </div>
             
-            {/* Background design elements */}
+            {/* Background design elements - Adjust for mobile */}
             <motion.div 
-              className="absolute -right-12 -bottom-12 w-40 h-40 border-2 border-dashed border-blue-medium rounded-xl opacity-20 rotate-12"
+              className="absolute -right-8 sm:-right-12 -bottom-8 sm:-bottom-12 w-32 sm:w-40 h-32 sm:h-40 border-2 border-dashed border-blue-500 dark:border-blue-400 rounded-xl opacity-20 rotate-12"
               animate={{ rotate: [12, 0, 12] }}
               transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
             />
             <motion.div 
-              className="absolute -left-12 -top-12 w-40 h-40 border-2 border-dashed border-indigo-400 rounded-full opacity-20"
+              className="absolute -left-8 sm:-left-12 -top-8 sm:-top-12 w-32 sm:w-40 h-32 sm:h-40 border-2 border-dashed border-indigo-400 rounded-full opacity-20"
               animate={{ scale: [1, 1.1, 1] }}
               transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
             />
@@ -376,10 +378,11 @@ const Hero = () => {
         animate={{ opacity: 0.7 }}
         transition={{ delay: 2, duration: 0.5 }}
       >
-        <span className="text-sm mb-2">Scroll to explore</span>
+        <span className="text-sm mb-2 text-gray-700 dark:text-gray-300">Scroll to explore</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
+          className="text-gray-700 dark:text-gray-300"
         >
           <FiArrowDown size={24} />
         </motion.div>
