@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 246, 246, 246;
+  --background-end-rgb: 255, 255, 255;
+  --primary-color: 10, 73, 112; /* blue-dark */
+  --accent-color: 96, 165, 250; /* blue-medium */
+  --cursor-size: 24px;
+}
+
+.dark {
+  --foreground-rgb: 255, 255, 255;
+  --background-start-rgb: 41, 41, 41;
+  --background-end-rgb: 0, 0, 0;
+}
+
+::selection {
+  background-color: rgba(var(--accent-color), 0.3);
+  color: rgb(var(--foreground-rgb));
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+  background: linear-gradient(
+      to bottom,
+      transparent,
+      rgb(var(--background-end-rgb))
+    )
+    rgb(var(--background-start-rgb));
+  font-family: 'Manrope', sans-serif;
+  overflow-x: hidden;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(var(--primary-color), 0.3);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(var(--primary-color), 0.5);
+}
+
+/* Design Grid */
+.design-grid {
+  background-image: 
+    linear-gradient(rgba(var(--accent-color), 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(var(--accent-color), 0.1) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+/* Interactive elements */
+button, a {
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+/* Component styles */
+.section-container {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16;
+}
+
+.heading-xl {
+  @apply text-4xl md:text-5xl font-bold mb-6;
+}
+
+.heading-lg {
+  @apply text-3xl md:text-4xl font-bold mb-4;
+}
+
+.heading-md {
+  @apply text-2xl md:text-3xl font-semibold mb-3;
+}
+
+.paragraph {
+  @apply text-base md:text-lg mb-4 leading-relaxed;
+}
+
+.btn-primary {
+  @apply bg-blue-dark text-white px-6 py-3 rounded-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-lg;
+}
+
+.btn-secondary {
+  @apply bg-gray-light text-gray-dark px-6 py-3 rounded-lg font-medium transform transition duration-300 hover:scale-105 hover:shadow-md dark:bg-gray-dark dark:text-gray-light;
+}
+
+.card {
+  @apply bg-white dark:bg-gray-dark rounded-xl shadow-md p-6 transform transition duration-300 hover:shadow-lg;
+}
+
+.nav-link {
+  @apply text-gray-dark dark:text-gray-light font-medium hover:text-blue-dark dark:hover:text-blue-medium transition duration-300;
+}
+
+/* Design System Elements */
+.color-swatch {
+  @apply w-8 h-8 rounded-full border-2 transition-all duration-300;
+  position: relative;
+}
+
+.color-swatch::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.color-swatch:hover::after {
+  opacity: 0.3;
+  box-shadow: 0 0 0 4px rgba(var(--accent-color), 0.2);
+}
+
+/* UI Elements */
+.ui-card {
+  @apply p-4 rounded-lg bg-white dark:bg-gray-800 shadow-md;
+  position: relative;
+  overflow: hidden;
+}
+
+.ui-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #60a5fa, #6366f1, #8b5cf6);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+
+.ui-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* Micro-interactions */
+.hover-lift {
+  @apply transition-all duration-300;
+}
+
+.hover-lift:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.pulse {
+  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+/* Text animations */
+.gradient-text {
+  background: linear-gradient(90deg, #60a5fa, #6366f1, #8b5cf6);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-size: 200% auto;
+  animation: gradientText 4s ease infinite;
+}
+
+@keyframes gradientText {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Animations */
+.fade-in {
+  @apply animate-fadeIn;
+}
+
+.slide-up {
+  @apply animate-slideUp;
+}
+
+/* Designer elements */
+.wireframe-box {
+  @apply border border-dashed border-gray-300 dark:border-gray-600 rounded-md bg-gray-100/30 dark:bg-gray-800/30;
+}
+
+.dot-pattern {
+  background-image: radial-gradient(circle, #60a5fa 1px, transparent 1px);
+  background-size: 16px 16px;
+} 
