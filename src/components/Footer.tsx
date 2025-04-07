@@ -1,11 +1,26 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
-import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiArrowUp } from 'react-icons/fi';
+import { FiLinkedin, FiGithub, FiTwitter, FiMail, FiPhone, FiMapPin, FiArrowUp } from 'react-icons/fi';
 
 const Footer = () => {
+  const [showScrollButton, setShowScrollButton] = useState(false);
+
+  // Show button when page is scrolled down
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowScrollButton(window.scrollY > 300);
+    };
+    
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Initial check
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Handle scroll to top
   const scrollToTop = () => {
     window.scrollTo({
       top: 0,
@@ -16,91 +31,106 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
   
   return (
-    <footer className="bg-gray-light dark:bg-gray-dark py-12 mt-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row justify-between items-center mb-8">
-          <div className="mb-6 md:mb-0">
-            <Link href="#hero" className="text-2xl font-bold text-blue-dark dark:text-blue-medium">
-              Raunak Shukla
-            </Link>
-            <p className="mt-2 text-gray-600 dark:text-gray-300 max-w-md">
-              I don't speak code—I craft experiences, sculpting ideas into products that resonate with beauty and functionality
+    <footer className="bg-white dark:bg-gray-900 border-t border-gray-200 dark:border-gray-800">
+      <div className="max-w-7xl mx-auto px-4 py-12 sm:px-6 lg:px-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Raunak Shukla</h3>
+            <p className="text-gray-700 dark:text-gray-300 mb-4 max-w-md">
+              I don't speak code—I craft experiences, sculpting ideas into products that resonate with beauty and functionality.
             </p>
+            <div className="flex justify-center md:justify-start space-x-4">
+              <a 
+                href="https://github.com/astatineRS" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+              >
+                <FiGithub className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://linkedin.com/in/raunak-shukla" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+              >
+                <FiLinkedin className="w-5 h-5" />
+              </a>
+              <a 
+                href="https://twitter.com/RaunakS10097663" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+              >
+                <FiTwitter className="w-5 h-5" />
+              </a>
+            </div>
           </div>
           
-          <div className="flex space-x-6">
-            <a 
-              href="https://linkedin.com/in/raunak-shukla" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors"
-              aria-label="LinkedIn"
-            >
-              <FiLinkedin size={24} />
-            </a>
-            <a 
-              href="https://github.com/astatineRS" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors"
-              aria-label="GitHub"
-            >
-              <FiGithub size={24} />
-            </a>
-            <a 
-              href="https://twitter.com/RaunakS10097663" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors"
-              aria-label="Twitter"
-            >
-              <FiTwitter size={24} />
-            </a>
-            <a 
-              href="mailto:rsworks.in@gmail.com" 
-              className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors"
-              aria-label="Email"
-            >
-              <FiMail size={24} />
-            </a>
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Quick Links</h3>
+            <ul className="space-y-2">
+              {['Home', 'About', 'Skills', 'Projects', 'Startups', 'Contact'].map((item) => (
+                <li key={item}>
+                  <a 
+                    href={`#${item.toLowerCase()}`} 
+                    className="text-gray-600 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 transition-colors"
+                  >
+                    {item}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+          <div>
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-3">Contact</h3>
+            <ul className="space-y-2">
+              <li className="flex items-center justify-center md:justify-start text-gray-700 dark:text-gray-300">
+                <FiMail className="mr-2 w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <a href="mailto:rsworks.in@gmail.com" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  rsworks.in@gmail.com
+                </a>
+              </li>
+              <li className="flex items-center justify-center md:justify-start text-gray-700 dark:text-gray-300">
+                <FiPhone className="mr-2 w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <a href="tel:+91 8176076516" className="hover:text-blue-600 dark:hover:text-blue-400 transition-colors">
+                  +91 8176076156
+                </a>
+              </li>
+              <li className="flex items-center justify-center md:justify-start text-gray-700 dark:text-gray-300">
+                <FiMapPin className="mr-2 w-5 h-5 text-gray-500 dark:text-gray-400" />
+                <span>Noida, India</span>
+              </li>
+            </ul>
           </div>
         </div>
         
-        <div className="border-t border-gray-300 dark:border-gray-700 pt-8">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex space-x-6 mb-4 md:mb-0">
-              <Link href="#about" className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors">
-                About
-              </Link>
-              <Link href="#startups" className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors">
-                Startups
-              </Link>
-              <Link href="#skills" className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors">
-                Skills
-              </Link>
-              <Link href="#projects" className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors">
-                Projects
-              </Link>
-              <Link href="#contact" className="text-gray-600 hover:text-blue-dark dark:text-gray-300 dark:hover:text-blue-medium transition-colors">
-                Contact
-              </Link>
-            </div>
-            
-            <motion.button
-              onClick={scrollToTop}
-              className="p-3 rounded-full bg-white dark:bg-gray-800 shadow-md text-gray-dark dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-              whileHover={{ y: -5 }}
-              aria-label="Scroll to top"
-            >
-              <FiArrowUp size={20} />
-            </motion.button>
-          </div>
-          
-          <p className="text-center text-gray-500 dark:text-gray-400 mt-8">
-            © {currentYear} Raunak Shukla. All rights reserved.
+        <div className="border-t border-gray-200 dark:border-gray-800 mt-8 pt-8 text-center text-gray-600 dark:text-gray-400">
+          <p>© {new Date().getFullYear()} Raunak Shukla. All rights reserved.</p>
+          <p className="mt-2 text-sm">
+            Crafted with 
+            <span className="text-red-500 mx-1">❤</span> 
+            using Next.js and Tailwind CSS
           </p>
         </div>
       </div>
+      
+      {/* Simple scroll to top button */}
+      {showScrollButton && (
+        <motion.button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 p-3 bg-blue-600 text-white rounded-full shadow-lg hover:bg-blue-700 focus:outline-none"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 10 }}
+          whileHover={{ y: -5 }}
+          whileTap={{ scale: 0.9 }}
+          aria-label="Scroll to top"
+        >
+          <FiArrowUp size={20} />
+        </motion.button>
+      )}
     </footer>
   );
 };
