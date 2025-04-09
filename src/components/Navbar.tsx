@@ -65,8 +65,8 @@ const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: ()
     };
   }, []);
 
+  // Try to play the sound file or generate one if the file isn't available
   const handleToggleWithSound = () => {
-    // Try to play the sound file or generate one if the file isn't available
     if (audioRef.current) {
       // Try to load and play the audio file
       audioRef.current.src = isDark 
@@ -123,7 +123,7 @@ const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: ()
 
   return (
     <motion.button
-      className="p-3 rounded-full bg-gray-light dark:bg-gray-dark flex items-center justify-center relative cursor-pointer"
+      className="p-3 rounded-full bg-gray-200 dark:bg-gray-800 flex items-center justify-center relative cursor-pointer"
       onClick={handleToggleWithSound}
       whileHover={{ scale: 1.15 }}
       whileTap={{ scale: 0.85 }}
@@ -142,7 +142,7 @@ const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: ()
         className={`absolute inset-0 rounded-full ${
           isDark 
             ? 'bg-blue-500 opacity-20 dark:opacity-30' 
-            : 'bg-yellow-300 opacity-20'
+            : 'bg-yellow-400 opacity-20'
         }`}
         animate={{ 
           scale: [1, 1.15, 1],
@@ -164,7 +164,7 @@ const ThemeToggle = ({ isDark, toggleTheme }: { isDark: boolean; toggleTheme: ()
         transition={{ duration: 0.3 }}
         className="absolute"
       >
-        <FiSun size={20} className="text-yellow-500" />
+        <FiSun size={20} className="text-yellow-600" />
       </motion.div>
       <motion.div
         initial={{ opacity: 0, rotate: 180 }}
@@ -335,7 +335,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center relative">
         <Link 
           href="#hero" 
-          className="text-blue-dark dark:text-blue-light font-bold text-xl flex items-center"
+          className="text-gray-900 dark:text-gray-100 font-bold text-xl flex items-center"
         >
           <motion.div 
             className="relative flex items-center"
@@ -348,13 +348,13 @@ const Navbar = () => {
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
             >
-              <FiGrid className="text-blue-medium" size={20} />
+              <FiGrid className="text-blue-600 dark:text-blue-400" size={20} />
               <span className="text-gradient">Raunak</span>
             </motion.span>
             
             {/* Decorative design element */}
             <motion.div 
-              className="absolute -bottom-1 -right-1 h-10 w-10 bg-blue-light dark:bg-blue-dark rounded-full z-0 opacity-20"
+              className="absolute -bottom-1 -right-1 h-10 w-10 bg-blue-200 dark:bg-blue-800 rounded-full z-0 opacity-20"
               animate={{ 
                 scale: [1, 1.1, 1],
               }}
@@ -376,8 +376,8 @@ const Navbar = () => {
                   <motion.div
                     className={`relative px-3 py-2 rounded-md text-sm font-medium ${
                       activeSection === link.href.substring(1)
-                        ? 'text-blue-dark dark:text-blue-light'
-                        : 'text-gray-600 dark:text-gray-300 hover:text-blue-dark dark:hover:text-blue-light'
+                        ? 'text-blue-700 dark:text-blue-300'
+                        : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400'
                     }`}
                     whileHover={{ y: -2 }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -386,7 +386,7 @@ const Navbar = () => {
                     {activeSection === link.href.substring(1) && (
                       <motion.div
                         layoutId="active-pill"
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-medium mx-3"
+                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-500 dark:bg-blue-400 mx-3"
                         transition={{ type: "spring", stiffness: 400, damping: 40 }}
                       />
                     )}
@@ -407,7 +407,7 @@ const Navbar = () => {
               href="https://github.com/astatineRS"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon"
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
               whileHover={{ y: -3, scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -417,7 +417,7 @@ const Navbar = () => {
               href="https://linkedin.com/in/raunak-shukla"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon"
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
               whileHover={{ y: -3, scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -427,7 +427,7 @@ const Navbar = () => {
               href="https://twitter.com/RaunakS10097663"
               target="_blank"
               rel="noopener noreferrer"
-              className="social-icon"
+              className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
               whileHover={{ y: -3, scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -439,7 +439,7 @@ const Navbar = () => {
 
           {/* Mobile menu button */}
           <motion.button
-            className="md:hidden p-2 rounded-full bg-gray-light dark:bg-gray-dark text-gray-dark dark:text-gray-light"
+            className="md:hidden p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300"
             onClick={() => setIsOpen(!isOpen)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
@@ -453,7 +453,7 @@ const Navbar = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.nav
-            className="md:hidden absolute left-0 right-0 top-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 py-4 px-4 sm:px-6"
+            className="md:hidden absolute left-0 right-0 top-full bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800 py-4 px-4 sm:px-6 shadow-lg"
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: 'auto' }}
             exit={{ opacity: 0, height: 0 }}
@@ -472,8 +472,8 @@ const Navbar = () => {
                     onClick={() => setIsOpen(false)}
                     className={`block py-2 px-3 rounded-md text-base font-medium ${
                       activeSection === link.href.substring(1)
-                        ? 'text-blue-dark dark:text-blue-light bg-gray-100 dark:bg-gray-800'
-                        : 'text-gray-600 dark:text-gray-300'
+                        ? 'text-blue-700 dark:text-blue-300 bg-blue-50 dark:bg-blue-900/30'
+                        : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800'
                     }`}
                   >
                     {link.name}
@@ -482,32 +482,32 @@ const Navbar = () => {
               ))}
             </ul>
             <div className="flex items-center space-x-2 mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
-              <span className="text-sm text-gray-500">Follow:</span>
+              <span className="text-sm text-gray-700 dark:text-gray-300">Follow:</span>
               <motion.a
-                href="https://github.com/raunakshukla"
+                href="https://github.com/astatineRS"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 hover:text-blue-600 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
                 <FiGithub size={18} />
               </motion.a>
               <motion.a
-                href="https://linkedin.com/in/raunakshukla"
+                href="https://linkedin.com/in/raunak-shukla"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 hover:text-blue-600 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >
                 <FiLinkedin size={18} />
               </motion.a>
               <motion.a
-                href="https://twitter.com/raunakshukla"
+                href="https://twitter.com/RaunakS10097663"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="social-icon"
+                className="flex items-center justify-center w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 hover:text-blue-600 dark:hover:bg-blue-900/30 dark:hover:text-blue-400"
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
               >

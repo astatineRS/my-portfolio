@@ -11,6 +11,18 @@
   --accent-dark: #10B98115;
   --background: #ffffff;
   --foreground: #171717;
+  --text-primary: #171717;
+  --text-secondary: #4b5563;
+  --text-tertiary: #6b7280;
+  --card-bg: #ffffff;
+  --card-border: #e5e7eb;
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-text: #111827;
+  --button-primary-bg: #3B82F6;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #f3f4f6;
+  --button-secondary-text: #374151;
 }
 
 .dark {
@@ -20,6 +32,18 @@
   --accent-dark: #10B98108;
   --background: #0a0a0a;
   --foreground: #ededed;
+  --text-primary: #f3f4f6;
+  --text-secondary: #d1d5db;
+  --text-tertiary: #9ca3af;
+  --card-bg: #1f2937;
+  --card-border: #374151;
+  --input-bg: #1f2937;
+  --input-border: #4b5563;
+  --input-text: #f3f4f6;
+  --button-primary-bg: #3B82F6;
+  --button-primary-text: #ffffff;
+  --button-secondary-bg: #1f2937;
+  --button-secondary-text: #d1d5db;
 }
 
 @theme inline {
@@ -38,7 +62,7 @@
 
 @layer components {
   .section-container {
-    @apply max-w-7xl mx-auto px-4 py-20 sm:px-6 lg:px-8;
+    @apply max-w-7xl mx-auto px-4 py-16 sm:py-20 sm:px-6 lg:px-8;
   }
 
   .card {
@@ -46,7 +70,7 @@
   }
 
   .paragraph {
-    @apply text-gray-600 dark:text-gray-300 leading-relaxed;
+    @apply text-gray-700 dark:text-gray-300 leading-relaxed;
   }
 
   .heading-xl {
@@ -62,11 +86,11 @@
   }
 
   .nav-link {
-    @apply text-gray-600 dark:text-gray-300 hover:text-blue-dark dark:hover:text-blue-light transition-colors duration-200;
+    @apply text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200;
   }
 
   .social-icon {
-    @apply p-2 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-600 dark:text-gray-300 hover:bg-blue-light hover:dark:bg-blue-dark hover:text-blue-dark hover:dark:text-blue-light transition-colors;
+    @apply p-2 rounded-full bg-gray-200 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-blue-100 hover:text-blue-600 dark:hover:bg-blue-900/30 dark:hover:text-blue-400 transition-colors;
   }
 
   .hover-lift {
@@ -94,6 +118,28 @@
   .accent-dark {
     background-color: var(--accent-dark);
   }
+
+  .btn-primary {
+    @apply bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  .btn-secondary {
+    @apply bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-700 px-4 py-2 rounded-lg font-medium transition-colors;
+  }
+
+  /* Improved wireframe styling */
+  .wireframe-box {
+    @apply bg-white dark:bg-gray-800 border border-dashed border-gray-300 dark:border-gray-600 rounded-lg shadow-sm;
+  }
+
+  /* Add responsive text utilities */
+  .responsive-text-lg {
+    @apply text-base sm:text-lg md:text-xl;
+  }
+
+  .responsive-text-md {
+    @apply text-sm sm:text-base md:text-lg;
+  }
 }
 
 /* Custom cursor for enhanced UX */
@@ -106,4 +152,21 @@ body {
 
 a, button, [role="button"] {
   cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'><circle cx='8' cy='8' r='6' stroke='%233B82F6' stroke-width='1.5' fill='%233B82F680'/></svg>") 8 8, pointer;
+}
+
+/* Mobile responsiveness improvements */
+@media (max-width: 640px) {
+  .section-container {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  .card {
+    padding: 1rem;
+  }
+  
+  .heading-xl {
+    font-size: 2rem;
+    line-height: 1.2;
+  }
 }
