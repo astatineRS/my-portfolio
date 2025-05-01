@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import { FiDownload, FiMail, FiArrowDown, FiBox, FiPenTool, FiLayers } from 'react-icons/fi';
+import { FaBehance } from 'react-icons/fa';
 
 // Design element components
 const DesignElement = ({ children, className, delay = 0 }: { children: React.ReactNode, className: string, delay?: number }) => (
@@ -246,6 +247,45 @@ const Hero = () => {
                 transition={{ duration: 0.3 }}
               />
             </motion.a>
+
+            <motion.a 
+              href="https://www.behance.net/raunakshukla2" 
+              target="_blank"
+              rel="noopener noreferrer"
+              className="btn-behance flex items-center gap-2 relative overflow-hidden group bg-[#053eff] hover:bg-[#0035e0] text-white py-2 px-6 rounded-lg shadow-md"
+              whileHover={{ 
+                scale: 1.05, 
+                boxShadow: "0 4px 12px rgba(5, 62, 255, 0.5)",
+              }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <FaBehance size={20} />
+              <span className="relative z-10">Behance Portfolio</span>
+              <motion.div 
+                className="absolute bottom-0 left-0 w-full h-1 bg-white opacity-0 group-hover:opacity-30"
+                initial={{ width: 0 }}
+                whileHover={{ width: "100%" }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-[#053eff] to-[#0952ff] opacity-0"
+                initial={{ opacity: 0 }}
+                whileHover={{ opacity: 0.6 }}
+                transition={{ duration: 0.3 }}
+              />
+              <motion.div
+                className="absolute -inset-1 bg-[#053eff] rounded-lg opacity-0 filter blur-xl"
+                animate={{ 
+                  opacity: [0, 0.1, 0],
+                  scale: [0.95, 1, 0.95]
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity,
+                  repeatType: "mirror"
+                }}
+              />
+            </motion.a>
           </motion.div>
         </div>
         
@@ -400,4 +440,4 @@ const Hero = () => {
   );
 };
 
-export default Hero; 
+export default Hero;
