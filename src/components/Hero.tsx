@@ -3,21 +3,8 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { FiDownload, FiMail, FiArrowDown, FiBox, FiPenTool, FiLayers } from 'react-icons/fi';
+import { FiDownload, FiArrowDown, FiExternalLink } from 'react-icons/fi';
 import { FaBehance } from 'react-icons/fa';
-
-// Design element components
-const DesignElement = ({ children, className, delay = 0 }: { children: React.ReactNode, className: string, delay?: number }) => (
-  <motion.div
-    className={`absolute ${className} bg-white dark:bg-gray-800 shadow-lg rounded-lg p-2 flex items-center justify-center z-10`}
-    initial={{ opacity: 0, scale: 0.8, y: 20 }}
-    animate={{ opacity: 1, scale: 1, y: 0 }}
-    transition={{ delay, duration: 0.5, type: "spring" }}
-    whileHover={{ y: -5, boxShadow: "0 10px 25px -5px rgba(0, 0, 0, 0.1)" }}
-  >
-    {children}
-  </motion.div>
-);
 
 // Animated cursor follower
 const CursorFollower = () => {
@@ -29,14 +16,9 @@ const CursorFollower = () => {
       setMousePosition({ x: e.clientX, y: e.clientY });
       if (!isVisible) setIsVisible(true);
     };
-
-    const handleMouseLeave = () => {
-      setIsVisible(false);
-    };
-
+    const handleMouseLeave = () => setIsVisible(false);
     window.addEventListener('mousemove', handleMouseMove);
     document.body.addEventListener('mouseleave', handleMouseLeave);
-
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
       document.body.removeEventListener('mouseleave', handleMouseLeave);
@@ -45,397 +27,313 @@ const CursorFollower = () => {
 
   return (
     <motion.div
-      className="fixed w-8 h-8 rounded-full pointer-events-none mix-blend-difference z-50 flex items-center justify-center"
+      className="fixed w-6 h-6 rounded-full pointer-events-none z-50 border-2 border-blue-500/60 hidden lg:flex"
       animate={{
-        x: mousePosition.x - 16,
-        y: mousePosition.y - 16,
+        x: mousePosition.x - 12,
+        y: mousePosition.y - 12,
         opacity: isVisible ? 1 : 0,
-        scale: isVisible ? [1, 1.2, 1] : 0
       }}
       transition={{
-        x: { type: "spring", stiffness: 300, damping: 30 },
-        y: { type: "spring", stiffness: 300, damping: 30 },
-        opacity: { duration: 0.2 },
-        scale: { duration: 0.5, repeat: Infinity, repeatType: "loop" }
+        x: { type: 'spring', stiffness: 400, damping: 35 },
+        y: { type: 'spring', stiffness: 400, damping: 35 },
+        opacity: { duration: 0.15 },
       }}
-    >
-      <div className="w-2 h-2 bg-blue-medium rounded-full" />
-    </motion.div>
+    />
   );
 };
 
+// App Store badge component
+const AppBadge = ({ store, href }: { store: 'ios' | 'android'; href: string }) => (
+  <motion.a
+    href={href}
+    target="_blank"
+    rel="noopener noreferrer"
+    className="app-store-btn"
+    whileHover={{ scale: 1.04, y: -1 }}
+    whileTap={{ scale: 0.97 }}
+  >
+    {store === 'ios' ? (
+      <>
+        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+        </svg>
+        <div className="flex flex-col leading-none">
+          <span className="text-[10px] opacity-75">Download on the</span>
+          <span className="text-sm font-semibold">App Store</span>
+        </div>
+      </>
+    ) : (
+      <>
+        <svg className="w-4 h-4 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M3.18 23.76c.3.16.64.22.99.16l.1-.06 11.17-6.45-2.54-2.54-9.72 8.89zm14.97-9.07L15.6 12l2.57-2.57L21.47 12l-3.32 2.69zm-3.7-3.85L3.27.24C2.92.08 2.55.05 2.22.18L13.33 11.3l1.12-1.46zm0 5.57l-1.12-1.41L2.22 23.82c.33.13.7.1 1.05-.06l11.18-7.35z"/>
+        </svg>
+        <div className="flex flex-col leading-none">
+          <span className="text-[10px] opacity-75">Get it on</span>
+          <span className="text-sm font-semibold">Google Play</span>
+        </div>
+      </>
+    )}
+  </motion.a>
+);
+
 const Hero = () => {
   const [typedText, setTypedText] = useState('');
-  const fullText = 'Designing Products. Managing Teams. Building Startups.';
-  
+  const phrases = ['Building SYINQ.', 'Designing Products.', 'Raising Funds.'];
+  const [phraseIndex, setPhraseIndex] = useState(0);
+  const [charIndex, setCharIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+
   useEffect(() => {
-    let currentIndex = 0;
-    const timer = setInterval(() => {
-      if (currentIndex <= fullText.length) {
-        setTypedText(fullText.slice(0, currentIndex));
-        currentIndex++;
+    const currentPhrase = phrases[phraseIndex];
+    const timeout = setTimeout(() => {
+      if (!isDeleting) {
+        if (charIndex < currentPhrase.length) {
+          setTypedText(currentPhrase.slice(0, charIndex + 1));
+          setCharIndex(charIndex + 1);
+        } else {
+          setTimeout(() => setIsDeleting(true), 1400);
+        }
       } else {
-        clearInterval(timer);
+        if (charIndex > 0) {
+          setTypedText(currentPhrase.slice(0, charIndex - 1));
+          setCharIndex(charIndex - 1);
+        } else {
+          setIsDeleting(false);
+          setPhraseIndex((phraseIndex + 1) % phrases.length);
+        }
       }
-    }, 50);
-
-    return () => clearInterval(timer);
-  }, []);
-
-  // Design system colors
-  const colorPalette = [
-    { bg: "bg-blue-100", border: "border-blue-500" },
-    { bg: "bg-indigo-100", border: "border-indigo-500" },
-    { bg: "bg-purple-100", border: "border-purple-500" },
-    { bg: "bg-pink-100", border: "border-pink-500" },
-  ];
+    }, isDeleting ? 40 : 65);
+    return () => clearTimeout(timeout);
+  }, [charIndex, isDeleting, phraseIndex]);
 
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden" id="hero">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-white dark:bg-gray-950" id="hero">
       <CursorFollower />
-      
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-100 via-white to-gray-100 dark:from-blue-950 dark:via-gray-900 dark:to-gray-950 opacity-70"></div>
-      
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5 dark:opacity-10"></div>
-      
-      {/* Animated background shapes */}
-      <motion.div 
-        className="absolute top-1/4 right-1/4 w-64 h-64 rounded-full bg-blue-400 dark:bg-blue-600 opacity-10 dark:opacity-20 blur-3xl"
-        animate={{ 
-          x: [0, 20, 0], 
-          y: [0, -20, 0],
-          scale: [1, 1.1, 1]
-        }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 15, 
-          ease: "easeInOut" 
+
+      {/* Subtle dot grid background */}
+      <div
+        className="absolute inset-0 opacity-40 dark:opacity-20"
+        style={{
+          backgroundImage: 'radial-gradient(circle, #d1d5db 1px, transparent 1px)',
+          backgroundSize: '28px 28px',
         }}
       />
-      
-      <motion.div 
-        className="absolute bottom-1/4 left-1/3 w-72 h-72 rounded-full bg-blue-600 dark:bg-blue-800 opacity-10 dark:opacity-20 blur-3xl"
-        animate={{ 
-          x: [0, -30, 0], 
-          y: [0, 20, 0],
-          scale: [1, 1.2, 1]
-        }}
-        transition={{ 
-          repeat: Infinity, 
-          duration: 18, 
-          ease: "easeInOut" 
-        }}
-      />
-      
-      {/* UI Design Elements - Hide on smaller screens */}
-      <DesignElement className="top-32 left-[15%] hidden lg:flex" delay={2.5}>
-        <div className="flex items-center gap-2">
-          <FiLayers className="text-blue-700 dark:text-blue-400" size={18} />
-          <span className="text-sm font-medium text-gray-800 dark:text-gray-200">UI Components</span>
-        </div>
-      </DesignElement>
-      
-      <DesignElement className="bottom-32 left-[20%] hidden lg:flex" delay={2.8}>
-        <div className="flex items-center gap-2">
-          <FiPenTool className="text-indigo-500" size={18} />
-          <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Design System</span>
-        </div>
-      </DesignElement>
-      
-      <DesignElement className="top-40 right-[15%] hidden lg:flex" delay={3.1}>
-        <div className="flex items-center gap-2">
-          <FiBox className="text-purple-500" size={18} />
-          <span className="text-sm font-medium text-gray-800 dark:text-gray-200">Prototyping</span>
-        </div>
-      </DesignElement>
-      
-      {/* Color palette - Hide on smaller screens */}
-      <div className="absolute right-10 top-1/2 transform -translate-y-1/2 hidden xl:flex flex-col gap-3">
-        {colorPalette.map((color, index) => (
-          <motion.div
-            key={index}
-            className={`w-8 h-8 rounded-full ${color.bg} border-2 ${color.border}`}
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            transition={{ delay: 2 + (index * 0.2), type: "spring" }}
-            whileHover={{ scale: 1.2 }}
-          />
-        ))}
-      </div>
-      
-      <div className="section-container z-10 flex flex-col lg:flex-row items-center justify-between gap-8 py-8 lg:py-20">
+
+      {/* Soft gradient orb top-right */}
+      <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-gradient-to-bl from-blue-50 via-indigo-50 to-transparent dark:from-blue-950/30 dark:via-indigo-950/20 rounded-full opacity-70 -translate-y-1/4 translate-x-1/4 pointer-events-none" />
+      {/* Soft gradient orb bottom-left */}
+      <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-gradient-to-tr from-indigo-50 to-transparent dark:from-indigo-950/20 rounded-full opacity-60 translate-y-1/4 -translate-x-1/4 pointer-events-none" />
+
+      <div className="section-container z-10 flex flex-col lg:flex-row items-center justify-between gap-12 py-8 lg:py-16">
+        {/* Left: Text content */}
         <div className="w-full lg:w-1/2 text-center lg:text-left">
-          <motion.h1 
-            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 dark:text-white"
-            initial={{ opacity: 0, y: -20 }}
+          {/* Role badge */}
+          <motion.div
+            className="flex justify-center lg:justify-start mb-5"
+            initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.4 }}
           >
-            Hi, I'm <span className="text-gradient">
+            <span className="badge-role flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-emerald-500 rounded-full inline-block animate-pulse" />
+              Co-Founder & CEO, SYINQ
+            </span>
+          </motion.div>
+
+          {/* Name */}
+          <motion.h1
+            className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4 text-gray-900 dark:text-white tracking-tight"
+            initial={{ opacity: 0, y: -16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Hi, I'm{' '}
+            <span className="text-gradient relative">
               Raunak Shukla
-              <motion.span 
-                className="absolute -bottom-2 left-0 w-full h-1 bg-blue-500 dark:bg-blue-400 rounded-full"
+              <motion.span
+                className="absolute -bottom-1 left-0 h-0.5 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full"
                 initial={{ width: 0 }}
-                animate={{ width: "100%" }}
-                transition={{ delay: 0.8, duration: 0.5 }}
+                animate={{ width: '100%' }}
+                transition={{ delay: 0.8, duration: 0.6 }}
               />
             </span>
           </motion.h1>
-          
+
+          {/* Typing animation */}
           <motion.div
-            className="h-12 md:h-16 mb-6 overflow-hidden"
+            className="h-10 mb-5 overflow-hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.5 }}
+            transition={{ delay: 0.4, duration: 0.4 }}
           >
-            <h2 className="text-base md:text-xl lg:text-2xl font-medium text-gray-800 dark:text-gray-200">
+            <h2 className="text-xl md:text-2xl font-semibold text-gray-700 dark:text-gray-200">
               {typedText}
-              <span className="animate-pulse">|</span>
+              <span className="animate-pulse text-blue-500">|</span>
             </h2>
           </motion.div>
-          
-          <motion.blockquote
-            className="text-lg md:text-xl mb-8 max-w-2xl mx-auto lg:mx-0 pl-4 border-l-4 border-blue-500 dark:border-blue-400 italic"
+
+          {/* Tagline */}
+          <motion.p
+            className="text-base md:text-lg text-gray-500 dark:text-gray-400 mb-8 max-w-lg mx-auto lg:mx-0 leading-relaxed"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 1, duration: 0.5 }}
+            transition={{ delay: 0.7, duration: 0.5 }}
           >
-            <p className="text-gray-700 dark:text-gray-300">
-              "I don't speak code—I craft experiences, sculpting ideas into products that resonate with beauty and functionality"
-            </p>
-          </motion.blockquote>
-          
+            Product designer & startup founder turning ideas into polished digital experiences.
+            Currently building <span className="font-semibold text-indigo-600 dark:text-indigo-400">SYINQ</span> — live on iOS & Android.
+          </motion.p>
+
+          {/* Primary CTAs */}
           <motion.div
-            className="flex flex-wrap gap-4 justify-center lg:justify-start"
-            initial={{ opacity: 0, y: 20 }}
+            className="flex flex-wrap gap-3 justify-center lg:justify-start mb-6"
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.5, duration: 0.5 }}
+            transition={{ delay: 1, duration: 0.4 }}
           >
-            <motion.a 
-              href="https://topmate.io/raunak_shukla" 
+            <motion.a
+              href="https://topmate.io/raunak_shukla"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-primary flex items-center gap-2 relative overflow-hidden group"
-              whileHover={{ scale: 1.05, boxShadow: "0 4px 12px rgba(59, 130, 246, 0.5)" }}
-              whileTap={{ scale: 0.95 }}
+              className="btn-primary flex items-center gap-2"
+              whileHover={{ scale: 1.04, y: -1 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <FiMail size={18} />
-              <span className="relative z-10">Book a Session</span>
-              <motion.span 
-                className="absolute inset-0 bg-blue-500 dark:bg-blue-600 opacity-0 group-hover:opacity-20"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
-            </motion.a>
-            
-            <motion.a 
-              href="/resume.pdf" 
-              className="btn-secondary flex items-center gap-2 relative overflow-hidden group"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              download
-            >
-              <FiDownload size={18} />
-              <span className="relative z-10">Download Resume</span>
-              <motion.span 
-                className="absolute inset-0 bg-blue-500 dark:bg-blue-600 opacity-0 group-hover:opacity-10"
-                initial={{ x: "-100%" }}
-                whileHover={{ x: 0 }}
-                transition={{ duration: 0.3 }}
-              />
+              Book a Session
             </motion.a>
 
-            <motion.a 
-              href="https://www.behance.net/raunakshukla2" 
+            <motion.a
+              href="/resume.pdf"
+              className="btn-secondary flex items-center gap-2"
+              whileHover={{ scale: 1.04, y: -1 }}
+              whileTap={{ scale: 0.97 }}
+              download
+            >
+              <FiDownload size={16} />
+              Resume
+            </motion.a>
+
+            <motion.a
+              href="https://www.behance.net/raunakshukla2"
               target="_blank"
               rel="noopener noreferrer"
-              className="btn-behance flex items-center gap-2 relative overflow-hidden group bg-[#053eff] hover:bg-[#0035e0] text-white py-2 px-6 rounded-lg shadow-md"
-              whileHover={{ 
-                scale: 1.05, 
-                boxShadow: "0 4px 12px rgba(5, 62, 255, 0.5)",
-              }}
-              whileTap={{ scale: 0.95 }}
+              className="flex items-center gap-2 bg-[#053eff] hover:bg-[#0035e0] text-white px-5 py-2.5 rounded-xl font-medium transition-all duration-200 shadow-sm hover:shadow-md text-sm"
+              whileHover={{ scale: 1.04, y: -1 }}
+              whileTap={{ scale: 0.97 }}
             >
-              <FaBehance size={20} />
-              <span className="relative z-10">Behance Portfolio</span>
-              <motion.div 
-                className="absolute bottom-0 left-0 w-full h-1 bg-white opacity-0 group-hover:opacity-30"
-                initial={{ width: 0 }}
-                whileHover={{ width: "100%" }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.div
-                className="absolute inset-0 bg-gradient-to-r from-[#053eff] to-[#0952ff] opacity-0"
-                initial={{ opacity: 0 }}
-                whileHover={{ opacity: 0.6 }}
-                transition={{ duration: 0.3 }}
-              />
-              <motion.div
-                className="absolute -inset-1 bg-[#053eff] rounded-lg opacity-0 filter blur-xl"
-                animate={{ 
-                  opacity: [0, 0.1, 0],
-                  scale: [0.95, 1, 0.95]
-                }}
-                transition={{ 
-                  duration: 2,
-                  repeat: Infinity,
-                  repeatType: "mirror"
-                }}
-              />
+              <FaBehance size={17} />
+              Behance
             </motion.a>
           </motion.div>
-        </div>
-        
-        <motion.div
-          className="w-full lg:w-1/2 flex justify-center lg:justify-end mt-8 lg:mt-0"
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
-          <div className="relative w-72 h-72 sm:w-80 sm:h-80">
-            {/* Interactive design elements container */}
-            <div className="absolute inset-0 flex items-center justify-center">
-              {/* Main image with design frame */}
-              <div className="relative w-64 h-64 sm:w-72 sm:h-72 z-10">
-                {/* Animated design frame */}
-                <motion.div 
-                  className="absolute -inset-3 bg-gradient-to-r from-blue-400 via-blue-500 to-indigo-500 rounded-lg opacity-70 z-0"
-                  animate={{ 
-                    rotate: [0, 5, 0, -5, 0],
-                    scale: [1, 1.02, 1, 1.02, 1] 
-                  }}
-                  transition={{ 
-                    duration: 8, 
-                    repeat: Infinity,
-                    ease: "easeInOut" 
-                  }}
-                />
-                
-                {/* Profile image */}
-                <motion.div 
-                  className="relative z-10 w-full h-full bg-white dark:bg-gray-800 rounded-lg p-1 shadow-xl overflow-hidden"
-                  whileHover={{ scale: 1.02 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                >
-                  <div className="relative w-full h-full rounded-lg overflow-hidden">
-                    <Image
-                      src="/profile.jpg"
-                      alt="Raunak Shukla"
-                      fill
-                      className="object-cover object-center"
-                      priority
-                    />
-                  </div>
-                </motion.div>
-              </div>
-              
-              {/* Decorative design elements - Adjust positioning for mobile */}
-              {/* Design grid */}
-              <motion.div 
-                className="absolute -top-4 -left-4 sm:top-0 sm:left-0 w-16 sm:w-20 h-16 sm:h-20 wireframe-box"
-                initial={{ y: -10, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ delay: 1, duration: 0.5 }}
-              >
-                <div className="grid grid-cols-2 gap-2 p-3">
-                  <div className="bg-blue-100 dark:bg-blue-900/30 h-full w-full rounded"></div>
-                  <div className="bg-blue-200 dark:bg-blue-800/30 h-full w-full rounded"></div>
-                  <div className="bg-blue-300 dark:bg-blue-700/30 h-full w-full rounded"></div>
-                  <div className="bg-blue-400 dark:bg-blue-600/30 h-full w-full rounded"></div>
-                </div>
-              </motion.div>
-              
-              {/* Design tool - Adjust for mobile */}
-              <motion.div 
-                className="absolute -bottom-2 -left-4 sm:-left-10 w-20 sm:w-24 h-20 sm:h-24 rounded-full bg-white dark:bg-gray-800 shadow-lg p-3 z-20"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ delay: 1.2, type: "spring", stiffness: 200, damping: 15 }}
-                whileHover={{ 
-                  rotate: 15,
-                  scale: 1.1,
-                }}
-              >
-                <div className="relative w-full h-full rounded-full bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/30 dark:to-indigo-900/30 flex items-center justify-center">
-                  <FiPenTool className="text-blue-500 dark:text-blue-400" size={28} />
-                </div>
-              </motion.div>
-              
-              {/* Component mockup - Adjust for mobile */}
-              <motion.div 
-                className="absolute -top-2 sm:-top-4 -right-4 sm:-right-8 w-24 sm:w-28 h-16 sm:h-20 bg-white dark:bg-gray-800 rounded-lg shadow-lg p-2 z-20"
-                initial={{ scale: 0, rotate: -10 }}
-                animate={{ scale: 1, rotate: -10 }}
-                transition={{ delay: 1.4, type: "spring", stiffness: 200, damping: 15 }}
-                whileHover={{ 
-                  y: -5,
-                  rotate: 0,
-                }}
-              >
-                <div className="w-full h-3 bg-blue-200 dark:bg-blue-900/30 rounded-full mb-2"></div>
-                <div className="grid grid-cols-3 gap-1">
-                  <div className="h-4 bg-indigo-200 dark:bg-indigo-900/30 rounded"></div>
-                  <div className="h-4 bg-blue-300 dark:bg-blue-800/30 rounded col-span-2"></div>
-                  <div className="h-4 bg-blue-300 dark:bg-blue-800/30 rounded col-span-2"></div>
-                  <div className="h-4 bg-indigo-200 dark:bg-indigo-900/30 rounded"></div>
-                </div>
-              </motion.div>
-              
-              {/* Prototype indicator - Adjust for mobile */}
-              <motion.div 
-                className="absolute bottom-2 -right-4 sm:-right-10 w-20 sm:w-24 h-8 sm:h-10 bg-blue-500 dark:bg-blue-600 text-white rounded-full shadow-lg z-20 flex items-center justify-center text-xs font-medium"
-                initial={{ x: 50, opacity: 0 }}
-                animate={{ x: 0, opacity: 1 }}
-                transition={{ delay: 1.6, duration: 0.5 }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <span>Prototype</span>
-              </motion.div>
+
+          {/* SYINQ Download CTA */}
+          <motion.div
+            className="flex flex-col items-center lg:items-start gap-2"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.3, duration: 0.4 }}
+          >
+            <p className="text-xs font-semibold text-gray-400 dark:text-gray-500 uppercase tracking-widest flex items-center gap-2">
+              <span className="w-6 h-px bg-gray-300 dark:bg-gray-600 inline-block" />
+              Download my app
+              <span className="w-6 h-px bg-gray-300 dark:bg-gray-600 inline-block" />
+            </p>
+            <div className="flex gap-2.5 flex-wrap justify-center lg:justify-start">
+              <AppBadge store="ios" href="https://apps.apple.com/in/app/syinq/id6755780778" />
+              <AppBadge store="android" href="https://play.google.com/store/apps/details?id=com.rasync.sync" />
             </div>
-            
-            {/* Background design elements - Adjust for mobile */}
-            <motion.div 
-              className="absolute -right-8 sm:-right-12 -bottom-8 sm:-bottom-12 w-32 sm:w-40 h-32 sm:h-40 border-2 border-dashed border-blue-500 dark:border-blue-400 rounded-xl opacity-20 rotate-12"
-              animate={{ rotate: [12, 0, 12] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+          </motion.div>
+        </div>
+
+        {/* Right: Profile visual */}
+        <motion.div
+          className="w-full lg:w-1/2 flex justify-center lg:justify-end"
+          initial={{ opacity: 0, scale: 0.92 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+        >
+          <div className="relative w-72 h-72 sm:w-80 sm:h-80 lg:w-96 lg:h-96">
+            {/* Animated ring */}
+            <motion.div
+              className="absolute -inset-4 rounded-3xl bg-gradient-to-br from-blue-100 via-indigo-100 to-purple-100 dark:from-blue-900/30 dark:via-indigo-900/20 dark:to-purple-900/10"
+              animate={{ rotate: [0, 3, 0, -3, 0] }}
+              transition={{ duration: 10, repeat: Infinity, ease: 'easeInOut' }}
             />
-            <motion.div 
-              className="absolute -left-8 sm:-left-12 -top-8 sm:-top-12 w-32 sm:w-40 h-32 sm:h-40 border-2 border-dashed border-indigo-400 rounded-full opacity-20"
-              animate={{ scale: [1, 1.1, 1] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            />
-            <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full rounded-full dot-pattern opacity-5 z-0"></div>
+
+            {/* Profile image */}
+            <motion.div
+              className="relative z-10 w-full h-full rounded-2xl overflow-hidden shadow-xl border-2 border-white dark:border-gray-800"
+              whileHover={{ scale: 1.02 }}
+              transition={{ type: 'spring', stiffness: 300, damping: 20 }}
+            >
+              <Image
+                src="/profile.jpg"
+                alt="Raunak Shukla"
+                fill
+                className="object-cover object-center"
+                priority
+              />
+              {/* Subtle gradient overlay at bottom */}
+              <div className="absolute bottom-0 inset-x-0 h-24 bg-gradient-to-t from-black/30 to-transparent" />
+            </motion.div>
+
+            {/* Floating stats card */}
+            <motion.div
+              className="absolute -bottom-4 -left-6 z-20 bg-white dark:bg-gray-800 rounded-2xl shadow-card-hover px-4 py-3 border border-gray-100 dark:border-gray-700"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1.2, duration: 0.4 }}
+              whileHover={{ y: -3 }}
+            >
+              <p className="text-xs text-gray-500 dark:text-gray-400 font-medium">SYINQ on App Stores</p>
+              <div className="flex items-center gap-3 mt-1">
+                <div className="flex flex-col">
+                  <span className="text-lg font-bold text-gray-900 dark:text-white leading-none">500+</span>
+                  <span className="text-[10px] text-gray-500">Students</span>
+                </div>
+                <div className="w-px h-8 bg-gray-200 dark:bg-gray-700" />
+                <div className="flex flex-col">
+                  <span className="text-lg font-bold text-emerald-600 leading-none">Live</span>
+                  <span className="text-[10px] text-gray-500">iOS & Android</span>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Floating badge - VC Medal */}
+            <motion.div
+              className="absolute -top-4 -right-4 z-20 bg-amber-50 dark:bg-amber-900/30 border border-amber-200 dark:border-amber-800 rounded-xl px-3 py-2 shadow-sm"
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 1.5, type: 'spring', stiffness: 200 }}
+              whileHover={{ y: -3 }}
+            >
+              <div className="flex items-center gap-1.5">
+                <span className="text-base">🥈</span>
+                <div>
+                  <p className="text-[10px] font-bold text-amber-800 dark:text-amber-300 leading-none">VC Silver Medal</p>
+                  <p className="text-[9px] text-amber-600 dark:text-amber-400">Innovation & Entrepreneurship</p>
+                </div>
+              </div>
+            </motion.div>
           </div>
         </motion.div>
       </div>
-      
+
+      {/* Scroll indicator */}
       <motion.div
-        className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2"
         initial={{ opacity: 0 }}
-        animate={{ opacity: 0.7 }}
+        animate={{ opacity: 0.5 }}
         transition={{ delay: 2, duration: 0.5 }}
       >
-        <span className="text-sm mb-2 text-gray-700 dark:text-gray-300">Scroll to explore</span>
+        <span className="text-xs text-gray-400 dark:text-gray-500 tracking-widest uppercase">Scroll</span>
         <motion.div
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
-          className="text-gray-700 dark:text-gray-300"
+          className="text-gray-400 dark:text-gray-500"
         >
-          <FiArrowDown size={24} />
+          <FiArrowDown size={18} />
         </motion.div>
       </motion.div>
-      
-      <style jsx>{`
-        .bg-grid-pattern {
-          background-image: 
-            linear-gradient(rgba(100, 100, 100, 0.1) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(100, 100, 100, 0.1) 1px, transparent 1px);
-          background-size: 20px 20px;
-        }
-      `}</style>
     </div>
   );
 };
