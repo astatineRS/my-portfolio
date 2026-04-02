@@ -1,24 +1,21 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://raunakshukla.com'),
-  title: 'Raunak Shukla | Product Designer & UI/UX Specialist',
-  description: 'I don\'t speak code—I craft experiences, sculpting ideas into products that resonate with beauty and functionality.',
+  title: 'Raunak Shukla | Co-Founder at SYINQ · Product Designer',
+  description: 'Co-Founder of SYINQ — live on the App Store & Play Store. B.Tech 2025, Bennett University. Product designer & startup builder crafting experiences that resonate.',
   openGraph: {
-    title: 'Raunak Shukla | Product Designer & UI/UX Specialist',
-    description: 'I don\'t speak code—I craft experiences, sculpting ideas into products that resonate with beauty and functionality.',
+    title: 'Raunak Shukla | Co-Founder at SYINQ · Product Designer',
+    description: 'Co-Founder of SYINQ — live on the App Store & Play Store. B.Tech 2025, Bennett University. Product designer & startup builder.',
     url: 'https://raunakshukla.com',
-    siteName: 'Raunak Shukla Portfolio',
+    siteName: 'Raunak Shukla',
     images: [
       {
         url: '/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Raunak Shukla - Product Designer & UI/UX Specialist',
+        alt: 'Raunak Shukla - Co-Founder at SYINQ · Product Designer',
       },
     ],
     locale: 'en_US',
@@ -26,8 +23,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Raunak Shukla | Product Designer & UI/UX Specialist',
-    description: 'I don\'t speak code—I craft experiences, sculpting ideas into products that resonate with beauty and functionality.',
+    title: 'Raunak Shukla | Co-Founder at SYINQ · Product Designer',
+    description: 'Co-Founder of SYINQ — live on the App Store & Play Store. Product designer & startup builder.',
     images: ['/og-image.jpg'],
     creator: '@RaunakS10097663',
   },
@@ -47,7 +44,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className={inter.className}>
+      <body>
         {children}
       </body>
     </html>
