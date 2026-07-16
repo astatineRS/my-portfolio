@@ -1,49 +1,37 @@
-# Raunak Shukla - Portfolio
+# Raunak Shukla — Founder Portfolio
 
-A modern, responsive portfolio website built with Next.js, React, Tailwind CSS, and Framer Motion.
+A founder-first portfolio for Raunak Shukla, Co-Founder and CEO of SYINQ. The site presents his work across product strategy, trust systems, campus mobility, AI-enabled execution, fundraising and company operations.
 
-## Features
+## Core narrative
 
-- Modern React with Next.js for optimized performance
-- Responsive design that works on all devices
-- Interactive UI with subtle animations using Framer Motion
-- Dark/Light mode toggle with theme persistence
-- Clean, accessible, and SEO-friendly code
+- Product, trust systems and AI-enabled execution
+- SYINQ: India's verified campus commute network
+- Systems over screens and field reality first
+- Founder milestones, recognition and technical foundations through July 2026
 
-## Technologies Used
+## Stack
 
-- **Frontend**: Next.js, React, TypeScript
-- **Styling**: Tailwind CSS
-- **Animations**: Framer Motion
-- **Deployment**: Vercel
+- Next.js 14
+- React and TypeScript
+- Tailwind CSS
+- Framer Motion
+- Vercel/Netlify-compatible deployment
 
-## Project Sections
-
-- Hero section with animated introduction
-- About section with education and professional background
-- Projects showcase with detailed descriptions
-- Skills section highlighting technical expertise
-- Achievements with certifications
-- Contact form for reaching out
-
-## Getting Started
+## Local development
 
 ```bash
-# Clone the repository
-git clone https://github.com/astatineRS/my-portfolio.git
-
-# Navigate to the project directory
-cd my-portfolio
-
-# Install dependencies
 npm install
-
-# Start the development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open [http://localhost:3000](http://localhost:3000).
 
-## Learn More
+## Validation
 
-This portfolio was designed to showcase product design, UI/UX, and development skills.
+```bash
+npm run lint
+npx tsc --noEmit
+npm run build
+```
+
+The downloadable founder resume is stored at `public/resume.pdf`. Portfolio metadata uses `https://raunakshukla.netlify.app` as the canonical production URL.

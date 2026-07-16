@@ -1,249 +1,112 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { FiAward, FiCheckCircle, FiStar } from 'react-icons/fi';
+import Image from 'next/image';
+import { FiAward, FiCheckCircle, FiExternalLink } from 'react-icons/fi';
 
-type Certificate = {
-  title: string;
-  issuer: string;
-  date: string;
-  credential?: string;
-  icon: string;
-};
+const recognitions = [
+  {
+    title: 'Vice Chancellor Silver Medal',
+    description: 'Innovation & Entrepreneurship, Bennett University—for co-founding SYINQ and bringing it to market.',
+    year: '2025',
+    featured: true,
+  },
+  {
+    title: 'IIT Kanpur AIIDE Cohort 5',
+    description: 'SYINQ shortlisted while expanding accelerator, grant and university-partnership outreach.',
+    year: '2026',
+  },
+  {
+    title: 'PW School of Startups',
+    description: 'Bennett-nominated participant; pitched SYINQ and completed startup, finance and design-thinking sessions.',
+    year: '2025',
+  },
+  {
+    title: 'Bennovate E-Summit Leadership',
+    description: 'Co-convened the entrepreneurship summit and helped coordinate the event team and execution.',
+    year: '2022–2024',
+  },
+  {
+    title: 'Campus Design & Event Communication',
+    description: 'Led visual identity and communication across the BU Sports Committee, entrepreneurship activities and college organisations; also contributed to Mood Indigo operations at IIT Bombay.',
+    year: '2021–2024',
+  },
+];
 
-type Achievement = {
-  title: string;
-  description: string;
-  year: string;
-  featured?: boolean;
-};
+const certificates = [
+  { title: 'Certified Network Defender (CND)', issuer: 'EC-Council', icon: '/icons/ec-council.png', href: 'https://www.linkedin.com/in/raunak-shukla' },
+  { title: 'AWS Academy Graduate', issuer: 'Cloud Foundations', icon: '/icons/aws.png', href: 'https://www.credly.com/badges/c5787e84-11ee-4456-8173-3113fb6329d9/linked_in' },
+  { title: 'AWS Cloud Quest', issuer: 'Cloud Practitioner', icon: '/icons/aws.png', href: 'https://www.credly.com/badges/45b0188b-24aa-45d6-ab35-ba87fc5cef7c/linked_in' },
+  { title: 'Career Edge', issuer: 'TCS iON — Young Professional', icon: '/icons/tcs.png', href: 'https://www.linkedin.com/in/raunak-shukla' },
+  { title: 'Improving Deep Neural Networks', issuer: 'DeepLearning.AI', icon: null, href: 'https://www.deeplearning.ai/' },
+];
 
-const CertificationCard = ({ certificate, index }: { certificate: Certificate; index: number }) => {
-  return (
-    <motion.div
-      className="card flex flex-col hover-lift"
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3, delay: index * 0.08 }}
-    >
-      <div className="flex items-center mb-3">
-        <div className="w-11 h-11 relative mr-3 flex-shrink-0 bg-gray-50 dark:bg-gray-700 rounded-xl flex items-center justify-center p-1.5">
-          <img
-            src={certificate.icon}
-            alt={certificate.issuer}
-            className="w-full h-full object-contain"
-          />
-        </div>
-        <div>
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white leading-tight">{certificate.title}</h3>
-          <p className="text-xs text-gray-500 dark:text-gray-400">{certificate.issuer}</p>
-        </div>
-      </div>
-
-      <p className="text-xs text-gray-400 dark:text-gray-500 mb-3">Issued: {certificate.date}</p>
-
-      {certificate.credential && (
-        <a
-          href={certificate.credential}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-auto text-xs text-blue-600 dark:text-blue-400 hover:underline flex items-center gap-1 font-medium"
-        >
-          <FiCheckCircle size={12} />
-          View Credential
-        </a>
-      )}
-    </motion.div>
-  );
-};
-
-const AchievementItem = ({ achievement, index }: { achievement: Achievement; index: number }) => {
-  if (achievement.featured) {
-    return (
-      <motion.div
-        className="flex items-start gap-4 p-4 rounded-2xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800"
-        initial={{ opacity: 0, x: -20 }}
-        whileInView={{ opacity: 1, x: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.35, delay: index * 0.08 }}
-      >
-        <div className="mt-0.5 flex-shrink-0 w-9 h-9 rounded-xl bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center">
-          <FiStar className="text-amber-600 dark:text-amber-400" size={18} />
-        </div>
-        <div>
-          <div className="flex items-center gap-2 flex-wrap mb-0.5">
-            <h3 className="text-base font-bold text-amber-900 dark:text-amber-200">{achievement.title}</h3>
-            <span className="text-xs bg-amber-200 dark:bg-amber-900 text-amber-800 dark:text-amber-300 px-2 py-0.5 rounded-full font-medium">{achievement.year}</span>
-          </div>
-          <p className="text-sm text-amber-800 dark:text-amber-300 leading-relaxed">{achievement.description}</p>
-        </div>
-      </motion.div>
-    );
-  }
-
-  return (
-    <motion.div
-      className="flex items-start gap-4"
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.3, delay: index * 0.08 }}
-    >
-      <div className="mt-1 flex-shrink-0">
-        <FiAward className="text-blue-medium dark:text-blue-400" size={18} />
-      </div>
-      <div>
-        <div className="flex items-center gap-2 flex-wrap">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">{achievement.title}</h3>
-          <span className="text-xs text-gray-400 dark:text-gray-500">({achievement.year})</span>
-        </div>
-        <p className="text-sm text-gray-600 dark:text-gray-300 mt-0.5">{achievement.description}</p>
-      </div>
-    </motion.div>
-  );
-};
-
-const Achievements = () => {
-  const certificates: Certificate[] = [
-    {
-      title: 'Certified Network Defender (CND)',
-      issuer: 'EC-Council',
-      date: 'September 2022',
-      credential: 'https://www.linkedin.com/posts/raunak-shukla_cndcertified-cybersecurity-networkdefender-activity-7060706406173151232-tIcc?utm_source=share&utm_medium=member_desktop&rcm=ACoAADBj-gQB84x1sdtnFOkty2E5UScyBEMbno8',
-      icon: '/icons/ec-council.png',
-    },
-    {
-      title: 'TCS iON Career Edge — Young Professional',
-      issuer: 'TCS iON',
-      date: 'June 2021',
-      credential: 'https://www.linkedin.com/posts/raunak-shukla_tcs-ion-career-edge-young-professional-activity-7099485044146122752-Qn7G?utm_source=share&utm_medium=member_desktop&rcm=ACoAADBj-gQB84x1sdtnFOkty2E5UScyBEMbno8',
-      icon: '/icons/tcs.png',
-    },
-    {
-      title: 'AWS Academy Graduate — Cloud Foundations',
-      issuer: 'Amazon Web Services',
-      date: 'March 2022',
-      credential: 'https://www.credly.com/badges/c5787e84-11ee-4456-8173-3113fb6329d9/linked_in?t=s5pz87',
-      icon: '/icons/aws.png',
-    },
-    {
-      title: 'AWS Cloud Quest: Cloud Practitioner',
-      issuer: 'Amazon Web Services',
-      date: 'May 2022',
-      credential: 'https://www.credly.com/badges/45b0188b-24aa-45d6-ab35-ba87fc5cef7c/linked_in?t=s5pz0s',
-      icon: '/icons/aws.png',
-    },
-  ];
-
-  const achievements: Achievement[] = [
-    {
-      title: 'Vice Chancellor Silver Medal — Innovation & Entrepreneurship',
-      description: "Awarded by Bennett University's Vice Chancellor for outstanding innovation and entrepreneurial achievement — recognised for co-founding SYINQ and bringing it to market.",
-      year: '2025',
-      featured: true,
-    },
-    {
-      title: 'Lead Designer for College Events',
-      description: 'Led design for multiple flagship college events, creating cohesive visual identities and marketing materials.',
-      year: '2021–2023',
-    },
-    {
-      title: 'BU Sports Committee Design Head',
-      description: 'Managed all visual communications for Bennett University Sports Committee.',
-      year: '2022',
-    },
-    {
-      title: 'Co-convener of Bennovate E-Summit',
-      description: "Helped organise Bennett University's annual E-Summit, overseeing a team of 70+ volunteers.",
-      year: '2022',
-    },
-    {
-      title: 'Mood Indigo Operations Team',
-      description: "Supported operations for IIT Bombay's cultural festival Mood Indigo, one of Asia's largest college festivals.",
-      year: '2021',
-    },
-  ];
-
+export default function Achievements() {
   return (
     <div className="section-container">
-      <motion.h2
-        className="heading-xl text-center mb-4"
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5 }}
-      >
-        Achievements & Certifications
-      </motion.h2>
+      <div className="mx-auto mb-12 max-w-3xl text-center">
+        <p className="mb-3 text-xs font-bold uppercase tracking-[0.22em] text-indigo-600 dark:text-indigo-400">Recognition & growth</p>
+        <h2 className="heading-xl mb-5">Milestones that compound</h2>
+        <p className="text-lg leading-relaxed text-gray-600 dark:text-gray-300">Founder progress, campus leadership and technical learning carried into real execution.</p>
+      </div>
 
-      <motion.p
-        className="paragraph text-center max-w-2xl mx-auto mb-14"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-      >
-        Recognition, certifications, and milestones from my academic and entrepreneurial journey.
-      </motion.p>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-14">
-        {/* Certifications */}
+      <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
         <div>
-          <motion.h3
-            className="heading-md mb-6 flex items-center gap-2"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <FiCheckCircle className="text-blue-600 dark:text-blue-400" size={22} />
-            Certifications
-          </motion.h3>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {certificates.map((certificate, index) => (
-              <CertificationCard key={index} certificate={certificate} index={index} />
+          <h3 className="heading-md mb-6 flex items-center gap-2"><FiAward className="text-indigo-600 dark:text-indigo-400" /> Selected recognition</h3>
+          <div className="space-y-4">
+            {recognitions.map((item, index) => (
+              <motion.article
+                key={item.title}
+                className={`rounded-2xl border p-5 ${item.featured ? 'border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/20' : 'border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-900'}`}
+                initial={false}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.05 }}
+              >
+                <div className="mb-2 flex flex-wrap items-center justify-between gap-2">
+                  <h4 className="font-bold text-gray-950 dark:text-white">{item.title}</h4>
+                  <span className="rounded-full bg-gray-100 px-2.5 py-1 text-xs font-bold text-gray-600 dark:bg-gray-700 dark:text-gray-300">{item.year}</span>
+                </div>
+                <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">{item.description}</p>
+              </motion.article>
             ))}
           </div>
         </div>
 
-        {/* Notable Achievements */}
         <div>
-          <motion.h3
-            className="heading-md mb-6 flex items-center gap-2"
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4 }}
-          >
-            <FiAward className="text-blue-600 dark:text-blue-400" size={22} />
-            Notable Achievements
-          </motion.h3>
-
-          <div className="space-y-5">
-            {achievements.map((achievement, index) => (
-              <AchievementItem key={index} achievement={achievement} index={index} />
+          <h3 className="heading-md mb-6 flex items-center gap-2"><FiCheckCircle className="text-blue-600 dark:text-blue-400" /> Certifications</h3>
+          <div className="space-y-3">
+            {certificates.map((certificate) => (
+              <a
+                key={`${certificate.title}-${certificate.issuer}`}
+                href={certificate.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-4 transition hover:-translate-y-0.5 hover:border-blue-200 hover:shadow-sm dark:border-gray-700 dark:bg-gray-900 dark:hover:border-blue-800"
+              >
+                <span className="relative flex h-11 w-11 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-gray-50 dark:bg-gray-800">
+                  {certificate.icon ? (
+                    <Image src={certificate.icon} alt="" fill sizes="44px" className="object-contain p-1.5" />
+                  ) : (
+                    <FiCheckCircle className="text-indigo-600 dark:text-indigo-400" size={20} />
+                  )}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-sm font-bold text-gray-950 dark:text-white">{certificate.title}</span>
+                  <span className="block text-xs text-gray-500 dark:text-gray-400">{certificate.issuer}</span>
+                </span>
+                <FiExternalLink className="flex-shrink-0 text-gray-400" size={15} />
+              </a>
             ))}
+          </div>
+
+          <div className="mt-6 rounded-2xl border border-blue-100 bg-blue-50/70 p-5 dark:border-blue-900/50 dark:bg-blue-950/20">
+            <p className="text-sm font-bold text-blue-900 dark:text-blue-200">B.Tech — Computer Science Engineering</p>
+            <p className="mt-1 text-sm text-blue-800 dark:text-blue-300">Cybersecurity specialisation · Bennett University</p>
+            <p className="mt-2 text-xs font-semibold text-blue-700 dark:text-blue-400">2021–2025 · CGPA 8.4</p>
           </div>
         </div>
       </div>
-
-      <motion.div
-        className="mt-14 bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-7 text-center border border-blue-100 dark:border-blue-900/50"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Always Learning</h3>
-        <p className="text-sm text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          I regularly participate in workshops, hackathons, and online courses to stay sharp at the
-          intersection of product design, technology, and startup building.
-        </p>
-      </motion.div>
     </div>
   );
-};
-
-export default Achievements;
+}

@@ -1,16 +1,12 @@
-'use client';
-
-import React from 'react';
-import { motion } from 'framer-motion';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
 import About from '@/components/About';
-import Skills from '@/components/Skills';
-import Projects from '@/components/Projects';
-import Achievements from '@/components/Achievements';
-import Contact from '@/components/Contact';
 import Startups from '@/components/Startups';
+import Skills from '@/components/Skills';
+import Achievements from '@/components/Achievements';
+import Projects from '@/components/Projects';
 import Hobbies from '@/components/Hobbies';
+import Contact from '@/components/Contact';
 import Footer from '@/components/Footer';
 
 export default function Home() {
@@ -18,79 +14,30 @@ export default function Home() {
     <>
       <Navbar />
       <main>
-        <section id="hero">
+        <section id="hero" aria-label="Introduction">
           <Hero />
         </section>
-        
-        <motion.section
-          id="about"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        <section id="about">
           <About />
-        </motion.section>
-        
-        <motion.section
-          id="skills"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <Skills />
-        </motion.section>
-        
-        <motion.section
-          id="projects"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
-          <Projects />
-        </motion.section>
-        
-        <motion.section
-          id="startups"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        </section>
+        <section id="startups" className="section-alt">
           <Startups />
-        </motion.section>
-        
-        <motion.section
-          id="achievements"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        </section>
+        <section id="capabilities">
+          <Skills />
+        </section>
+        <section id="milestones" className="section-alt">
           <Achievements />
-        </motion.section>
-        
-        <motion.section
-          id="hobbies"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        </section>
+        <section id="foundation">
+          <Projects />
+        </section>
+        <section id="interests" className="section-alt">
           <Hobbies />
-        </motion.section>
-        
-        <motion.section
-          id="contact"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
-          viewport={{ once: true }}
-        >
+        </section>
+        <section id="contact">
           <Contact />
-        </motion.section>
+        </section>
       </main>
       <Footer />
     </>
